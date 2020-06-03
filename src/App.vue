@@ -1,18 +1,25 @@
 <template>
   <div id="app">
+    <p class="text-center">
+      Scenario 1: Calculated monthly contributions are <strong>less than</strong> maximum contributions
+    </p>
     <div class="contributions mb-5">
       <div class="d-flex align-items-center mb-4">
         <div class="font-weight-bold flex-shrink-0 mr-4">Your Monthly Contributions:</div>
         <b-form-input style="width: 80px" v-model="slider1"></b-form-input>
       </div>
-      <custom-slider min="0" max="200" v-model="slider1" />
+      <custom-slider min="0" max="90" v-model="slider1" />
     </div>
+
+    <p class="text-center">
+      Scenario 2: Calculated monthly contributions are <strong>greater than</strong> maximum contributions
+    </p>
     <div class="contributions">
       <div class="d-flex align-items-center mb-4">
         <div class="font-weight-bold flex-shrink-0 mr-4">Your Monthly Contributions:</div>
         <b-form-input style="width: 80px" v-model="slider2"></b-form-input>
       </div>
-      <custom-slider min="0" max="200" overMax v-model="slider2" />
+      <custom-slider min="0" max="70" overMax v-model="slider2" />
     </div>
   </div>
 </template>
@@ -27,8 +34,8 @@ export default {
   name: 'App',
   data() {
     return {
-      slider1: 71,
-      slider2: 71,
+      slider1: 70,
+      slider2: 50,
     };
   },
   components: {
