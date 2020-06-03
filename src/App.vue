@@ -1,28 +1,75 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="contributions mb-5">
+      <div class="d-flex align-items-center mb-4">
+        <div class="font-weight-bold flex-shrink-0 mr-4">Your Monthly Contributions:</div>
+        <b-form-input style="width: 80px" v-model="slider1"></b-form-input>
+      </div>
+      <custom-slider min="0" max="200" v-model="slider1" />
+    </div>
+    <div class="contributions">
+      <div class="d-flex align-items-center mb-4">
+        <div class="font-weight-bold flex-shrink-0 mr-4">Your Monthly Contributions:</div>
+        <b-form-input style="width: 80px" v-model="slider2"></b-form-input>
+      </div>
+      <custom-slider min="0" max="200" overMax v-model="slider2" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import rangeSlider from "vue-range-slider";
+// import "vue-range-slider/dist/vue-range-slider.css";
+
+import CustomSlider from '@/components/CustomRangeSlider';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      slider1: 71,
+      slider2: 71,
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    CustomSlider,
+  },
+};
 </script>
 
 <style lang="scss">
+$lighter-grey: #f5f6fa;
+$light-grey: #e3e9eb;
+$light-blue: #4f9efa;
+$dark-blue: #12426d;
+
+$slider-width: 100%;
+$knob-size: 20px;
+$rail-height: 10px;
+$rail-color: $light-grey;
+$rail-fill-color: $light-blue;
+$knob-color: $light-blue;
+$knob-border: 1px solid $light-blue;
+
+// import the built-in vue-range-slider style
+@import '~vue-range-slider/dist/vue-range-slider.scss';
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: #fff;
+  margin-top: 100px;
+}
+
+.contributions {
+  padding: 30px 100px 50px 60px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: $lighter-grey;
+  color: $dark-blue;
+}
+
+.range-slider {
+  padding: 0;
 }
 </style>
