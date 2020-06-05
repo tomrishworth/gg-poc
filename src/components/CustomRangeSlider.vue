@@ -1,14 +1,22 @@
 <template>
   <div class="slider">
     <div class="slider__wrapper">
-      <div v-if="overMax" :style="{ left: position }" class="slider__label">Your Maximum: ${{ sliderLabel }}</div>
-      <div v-else :style="{ left: position }" class="slider__label">Contributions: ${{ sliderLabel }}</div>
+      <!-- <div
+        v-if="overMax"
+        :style="{ left: position }"
+        class="slider__label"
+      >Your Maximum: ${{ sliderLabel }}</div>-->
+      <div :style="{ left: position }" class="slider__label">Contributions: ${{ sliderLabel }}</div>
       <div class="slider__track" :class="{ 'over-max': overMax }"></div>
       <div class="slider__fill" :style="{ width: width + 'px' }"></div>
+      <div class="slider__max" v-if="overMax" :style="{ left: yourMaxPosition  }">
+        <!-- <div class="max-thumb"></div> -->
+        <div class="max-label">Your Max: ${{yourMax}}</div>
+      </div>
       <div class="slider__maximum">
         <div class="max-thumb" :class="{ 'over-max': overMax }"></div>
-        <div v-if="overMax" class="max-label">Your Calculated: ${{ sliderMax }}</div>
-        <div v-else class="max-label">Your Maximum: ${{ sliderMax }}</div>
+        <div v-if="overMax" class="max-label">Calculated: ${{ sliderMax }}</div>
+        <div v-else class="max-label">Your Max: ${{ sliderMax }}</div>
       </div>
       <input
         ref="slider"
@@ -22,9 +30,6 @@
         @change="change"
       />
     </div>
-    <!-- <div v-if="overMax" class="mt-5">
-      <img src="../assets/group-67.png" />
-    </div> -->
   </div>
 </template>
 
@@ -32,40 +37,44 @@
 export default {
   props: {
     value: {
-      type: String,
-      required: false,
-      default: '',
+      type: Number,
+      required: false
     },
     values: {
       type: Array,
       required: false,
-      default: () => [],
+      default: () => []
     },
     min: {
       type: String,
       required: false,
-      default: '0',
+      default: "0"
     },
     max: {
       type: String,
       required: false,
-      default: '100',
+      default: "100"
     },
     step: {
       type: String,
       required: false,
-      default: '1',
+      default: "1"
     },
     hideLabel: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     overMax: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
+    yourMax: {
+      type: Number,
+      required: false,
+      default: null
+    }
   },
   data() {
     return {
@@ -73,24 +82,29 @@ export default {
       sliderValues: [],
       sliderValue: null,
       sliderMax: null,
-      sliderMin: null,
+      sliderMin: null
     };
   },
   computed: {
     sliderLabel() {
       // If using custom values, the custom label is returned, otherwise the value is also the label
-      return this.sliderValues.length ? this.sliderValues[this.sliderValue - 1].label : this.sliderValue;
+      return this.sliderValues.length
+        ? this.sliderValues[this.sliderValue - 1].label
+        : this.sliderValue;
     },
     sliderOutputValue() {
       // If using custom values, the custom value is returned, otherwise just the default value
-      return this.sliderValues.length ? this.sliderValues[this.sliderValue - 1].value : this.sliderValue;
+      return this.sliderValues.length
+        ? this.sliderValues[this.sliderValue - 1].value
+        : this.sliderValue;
     },
     position() {
       const val = this.sliderValue;
       // Measure width of slider element. Adjust by 20 to account for thumbsize
       const width = this.sliderWidth - 20;
       // Calculate percentage between left and right of input
-      const percent = (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
+      const percent =
+        (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
       // Janky value to get pointer to line up better
       const offset = -2;
       const position = width * percent + offset;
@@ -98,16 +112,29 @@ export default {
     },
     width() {
       const val = this.sliderValue;
-      const percent = (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
+      const percent =
+        (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
       const width = this.sliderWidth;
       return width * percent;
     },
+    yourMaxPosition() {
+      const val = this.yourMax;
+      // Measure width of slider element. Adjust by 20 to account for thumbsize
+      const width = this.sliderWidth - 20;
+      // Calculate percentage between left and right of input
+      const percent =
+        (val - this.sliderMin) / (this.sliderMax - this.sliderMin);
+      // Janky value to get pointer to line up better
+      const offset = -2;
+      const position = width * percent + offset;
+      return `${position}px`;
+    }
   },
   created() {
     // Set local values, depending on use of custom or default
     if (this.values.length) {
       this.sliderValues = this.values;
-      this.sliderMin = '1';
+      this.sliderMin = "1";
       this.sliderMax = this.sliderValues.length;
       // Find the corresponding custom value, and set the local sliderValue
       let index = 0;
@@ -132,12 +159,12 @@ export default {
   },
   methods: {
     update() {
-      this.$emit('input', this.sliderOutputValue);
+      this.$emit("input", this.sliderOutputValue);
     },
     change() {
-      this.$emit('change', this.sliderOutputValue);
-    },
-  },
+      this.$emit("change", this.sliderOutputValue);
+    }
+  }
 };
 </script>
 
@@ -156,7 +183,7 @@ $label-background: white;
 $label-shadow: 0 10px 20px -5px rgba(45, 45, 45, 0.25);
 
 $slider-track-background: $light-grey;
-$slider-track-height: 10px;
+$slider-track-height: 8px;
 
 $slider-track-fill: $light-blue;
 
@@ -187,7 +214,7 @@ $thumb-size: 20px;
     white-space: nowrap;
 
     &:after {
-      content: '';
+      content: "";
       width: 1px;
       height: 40px;
       background-color: $grey;
@@ -223,6 +250,46 @@ $thumb-size: 20px;
     background: $slider-track-fill;
   }
 
+  &__max {
+    position: absolute;
+    top: 0;
+    .max-thumb {
+      height: $thumb-size;
+      width: $thumb-size;
+      background-color: $light-blue;
+      border-radius: 50%;
+      position: absolute;
+      right: 0;
+      top: 5px;
+    }
+    .max-label {
+      position: absolute;
+      top: -30px;
+      background: $lighter-grey;
+      color: $label-color;
+      font-weight: bold;
+      padding: 2px 5px;
+      font-size: 14px;
+      text-align: center;
+      transform: translateX(-55%);
+      // box-shadow: $label-shadow;
+      min-width: 30px;
+      white-space: nowrap;
+      z-index: 10;
+      margin-left: 21px;
+      &:after {
+        content: "";
+        width: 1px;
+        height: 20px;
+        background-color: $grey;
+        position: absolute;
+        top: 22px;
+        left: 49%;
+        transform: translateX(-2px);
+      }
+    }
+  }
+
   &__maximum {
     position: absolute;
     right: 0;
@@ -241,7 +308,7 @@ $thumb-size: 20px;
     }
     .max-label {
       position: absolute;
-      top: -35px;
+      top: -48px;
       // background: $label-background;
       color: $label-color;
       font-weight: bold;
@@ -254,21 +321,21 @@ $thumb-size: 20px;
       white-space: nowrap;
 
       &:after {
-        content: '';
+        content: "";
         width: 1px;
-        height: 20px;
+        height: 32px;
         background-color: $grey;
         position: absolute;
         top: 22px;
         left: 50%;
-        transform: translateX(-2px);
+        transform: translateX(-3px);
       }
     }
   }
 
   &__track-top,
   &__track-bottom {
-    content: '';
+    content: "";
     width: 100%;
     position: absolute;
     width: 0;
@@ -294,7 +361,7 @@ $thumb-size: 20px;
     width: 100%;
     background: none;
     padding: 0;
-    z-index: 1;
+    z-index: 10;
     position: relative;
 
     &:focus {
