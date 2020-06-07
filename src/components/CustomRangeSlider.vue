@@ -1,19 +1,13 @@
 <template>
   <div class="slider">
     <div class="slider__wrapper">
-      <!-- <div
-        v-if="overMax"
-        :style="{ left: position }"
-        class="slider__label"
-      >Your Maximum: ${{ sliderLabel }}</div>-->
       <div :style="{ left: position }" class="slider__label">Contributions: ${{ sliderLabel }}</div>
       <div class="slider__track" :class="{ 'over-max': overMax }"></div>
       <div class="slider__fill" :style="{ width: width + 'px' }"></div>
       <div class="slider__max" v-if="overMax" :style="{ left: yourMaxPosition  }">
-        <!-- <div class="max-thumb"></div> -->
         <div class="max-label">Your Max: ${{yourMax}}</div>
       </div>
-      <div class="slider__maximum">
+      <div class="slider__end">
         <div class="max-thumb" :class="{ 'over-max': overMax }"></div>
         <div v-if="overMax" class="max-label">Calculated: ${{ sliderMax }}</div>
         <div v-else class="max-label">Your Max: ${{ sliderMax }}</div>
@@ -169,8 +163,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "../../public/vue-custom-range-slider.scss";
-// @import 'vue-custom-range-slider/dist/vue-custom-range-slider.scss';
 $lighter-grey: #f5f6fa;
 $light-grey: #e3e9eb;
 $grey: #c9d2d4;
@@ -290,7 +282,7 @@ $thumb-size: 20px;
     }
   }
 
-  &__maximum {
+  &__end {
     position: absolute;
     right: 0;
     top: 0;
@@ -309,14 +301,12 @@ $thumb-size: 20px;
     .max-label {
       position: absolute;
       top: -48px;
-      // background: $label-background;
       color: $label-color;
       font-weight: bold;
       padding: 2px 5px;
       font-size: 14px;
       text-align: center;
       transform: translateX(-55%);
-      // box-shadow: $label-shadow;
       min-width: 30px;
       white-space: nowrap;
 

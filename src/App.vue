@@ -34,9 +34,6 @@
 </template>
 
 <script>
-// import rangeSlider from "vue-range-slider";
-// import "vue-range-slider/dist/vue-range-slider.css";
-
 import CustomSlider from "@/components/CustomRangeSlider";
 
 export default {
@@ -60,17 +57,6 @@ $light-grey: #e3e9eb;
 $light-blue: #4f9efa;
 $dark-blue: #12426d;
 
-$slider-width: 100%;
-$knob-size: 20px;
-$rail-height: 10px;
-$rail-color: $light-grey;
-$rail-fill-color: $light-blue;
-$knob-color: $light-blue;
-$knob-border: 1px solid $light-blue;
-
-// import the built-in vue-range-slider style
-@import "~vue-range-slider/dist/vue-range-slider.scss";
-
 #app {
   background: #fff;
   margin-top: 100px;
@@ -84,9 +70,5 @@ $knob-border: 1px solid $light-blue;
   margin-right: auto;
   background-color: $lighter-grey;
   color: $dark-blue;
-}
-
-.range-slider {
-  padding: 0;
 }
 </style>
